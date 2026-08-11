@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CineSpark — Visual Productions & Media Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12181f;
+    --bg-elevated:#181f28;
+    --bg-card:#1b232d;
+    --line:#2a3542;
+    --blue:#0088FF;
+    --blue-soft:rgba(0,136,255,0.14);
+    --orange:#FF9900;
+    --orange-soft:rgba(255,153,0,0.14);
+    --white:#f5f7fa;
+    --muted:#8b96a3;
+    --muted-dim:#5c6a78;
+    --radius:14px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+    background-image:
+      radial-gradient(ellipse 900px 500px at 15% -5%, rgba(0,136,255,0.10), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 10%, rgba(255,153,0,0.06), transparent 60%);
+  }
+
+  ::selection{background:var(--blue);color:#fff;}
+
+  a{color:inherit;text-decoration:none;}
+  ul{list-style:none;}
+  img{max-width:100%;display:block;}
+
+  .wrap{
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Bebas Neue',sans-serif;
+    letter-spacing:0.5px;
+    line-height:1.02;
+    font-weight:400;
+  }
+
+  .eyebrow{
+    font-family:'Space Mono',monospace;
+    font-size:12.5px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--orange);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--orange);
+    box-shadow:0 0 0 4px var(--orange-soft);
+  }
+
+  .grad-text{
+    background:linear-gradient(90deg,var(--blue) 0%, #4fb2ff 45%, var(--orange) 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  /* ---------- Film strip divider (signature motif) ---------- */
+  .filmstrip{
+    height:22px;
+    width:100%;
+    background:
+      repeating-linear-gradient(90deg,
+        var(--bg-elevated) 0 18px,
+        transparent 18px 22px),
+      linear-gradient(90deg, rgba(0,136,255,0.35), rgba(255,153,0,0.35));
+    background-blend-mode:normal;
+    position:relative;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+  }
+  .filmstrip::before,.filmstrip::after{
+    content:"";
+    position:absolute;
+    top:0;bottom:0;
+    width:100%;
+    background-image: radial-gradient(circle, var(--bg) 3.5px, transparent 3.6px);
+    background-size:26px 22px;
+    background-position:9px 0;
+  }
+  .filmstrip::after{ opacity:0; }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    font-family:'Inter',sans-serif;
+    font-weight:700;
+    font-size:14.5px;
+    letter-spacing:0.2px;
+    padding:14px 26px;
+    border-radius:9px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(100deg, var(--blue), #0071d6);
+    color:#fff;
+    box-shadow:0 6px 20px rgba(0,136,255,0.28);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 26px rgba(0,136,255,0.4);
+    background:linear-gradient(100deg,#0090ff,var(--blue));
+  }
+  .btn-orange{
+    background:linear-gradient(100deg,var(--orange),#e08600);
+    color:#161014;
+    box-shadow:0 6px 20px rgba(255,153,0,0.25);
+  }
+  .btn-orange:hover{
+    transform:translateY(-2px);
+    box-shadow:0 10px 26px rgba(255,153,0,0.4);
+  }
+  .btn-ghost{
+    background:transparent;
+    border-color:var(--line);
+    color:var(--white);
+  }
+  .btn-ghost:hover{
+    border-color:var(--blue);
+    background:var(--blue-soft);
+  }
+  .btn-sm{padding:10px 18px;font-size:13px;}
+  .btn:focus-visible{outline:2px solid var(--orange);outline-offset:3px;}
+
+  /* ---------- Header ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    padding:18px 0;
+    transition:background .3s ease, border-color .3s ease, padding .3s ease;
+    border-bottom:1px solid transparent;
+  }
+  header.scrolled{
+    background:rgba(18,24,31,0.86);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+    padding:12px 0;
+  }
+  .nav-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .logo{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:26px;
+    letter-spacing:1px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .logo .spark{color:var(--orange);}
+  .logo .dot{
+    width:8px;height:8px;border-radius:50%;
+    background:var(--blue);
+    box-shadow:0 0 10px 2px var(--blue);
+    margin-left:2px;
+  }
+  .nav-links{
+    display:flex;
+    gap:36px;
+    font-size:14.5px;
+    font-weight:500;
+    color:var(--muted);
+  }
+  .nav-links a{transition:color .2s ease;position:relative;}
+  .nav-links a:hover{color:var(--white);}
+  .nav-links a::after{
+    content:"";
+    position:absolute;left:0;bottom:-6px;
+    width:0;height:2px;background:var(--orange);
+    transition:width .25s ease;
+  }
+  .nav-links a:hover::after{width:100%;}
+
+  .nav-right{display:flex;align-items:center;gap:22px;}
+  .burger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:6px;}
+  .burger span{width:24px;height:2px;background:var(--white);display:block;transition:.25s;}
+
+  .mobile-menu{
+    display:none;
+    position:fixed;
+    top:0;right:0;
+    height:100vh;
+    width:78%;
+    max-width:320px;
+    background:var(--bg-elevated);
+    border-left:1px solid var(--line);
+    z-index:200;
+    padding:28px 26px;
+    transform:translateX(100%);
+    transition:transform .32s ease;
+    flex-direction:column;
+    gap:26px;
+  }
+  .mobile-menu.open{transform:translateX(0);}
+  .mobile-menu a{font-size:18px;font-weight:600;}
+  .mobile-close{align-self:flex-end;background:none;border:none;color:var(--white);font-size:26px;cursor:pointer;}
+  .scrim{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:150;
+  }
+  .scrim.open{display:block;}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:168px 0 90px;
+    position:relative;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.05fr 0.95fr;
+    gap:56px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(44px,6vw,74px);
+    margin:18px 0 22px;
+  }
+  .hero p.sub{
+    font-size:17.5px;
+    color:var(--muted);
+    max-width:520px;
+    margin-bottom:34px;
+  }
+  .hero-ctas{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:38px;}
+  .hero-stats{
+    display:flex;
+    gap:34px;
+    flex-wrap:wrap;
+  }
+  .hero-stats div{border-left:2px solid var(--line);padding-left:14px;}
+  .hero-stats .num{
+    font-family:'Space Mono',monospace;
+    font-size:24px;
+    font-weight:700;
+    color:var(--blue);
+  }
+  .hero-stats .lbl{font-size:12.5px;color:var(--muted-dim);text-transform:uppercase;letter-spacing:1px;}
+
+  /* Showreel frame */
+  .reel-frame{
+    position:relative;
+    border-radius:18px;
+    border:1px solid var(--line);
+    background:linear-gradient(160deg,#1a2129,#111720);
+    padding:10px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6);
+  }
+  .reel-inner{
+    position:relative;
+    aspect-ratio:16/10;
+    border-radius:12px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(0,136,255,0.35), transparent 55%),
+      radial-gradient(circle at 80% 80%, rgba(255,153,0,0.28), transparent 55%),
+      linear-gradient(135deg,#0d1319,#1a232d 60%,#0d1319);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .letterbox-bar{
+    position:absolute;left:0;right:0;height:34px;background:#050709;
+  }
+  .letterbox-bar.top{top:0;}
+  .letterbox-bar.bottom{bottom:0;}
+  .rec-tag{
+    position:absolute;top:12px;left:16px;
+    display:flex;align-items:center;gap:7px;
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;color:#ff5b5b;letter-spacing:1px;
+    z-index:3;
+  }
+  .rec-dot{width:8px;height:8px;border-radius:50%;background:#ff3b3b;animation:pulse 1.4s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+  .timecode{
+    position:absolute;bottom:12px;right:16px;
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;color:var(--muted);
+    letter-spacing:1px;z-index:3;
+  }
+  .play-btn{
+    width:74px;height:74px;border-radius:50%;
+    background:rgba(245,247,250,0.94);
+    display:flex;align-items:center;justify-content:center;
+    cursor:pointer;
+    transition:transform .25s ease, background .25s ease;
+    z-index:3;
+  }
+  .play-btn:hover{transform:scale(1.08);background:#fff;}
+  .play-btn svg{margin-left:4px;}
+  .scanline{
+    position:absolute;inset:0;
+    background:repeating-linear-gradient(180deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 4px);
+    pointer-events:none;
+  }
+  .reel-caption{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 8px 6px;
+    font-family:'Space Mono',monospace;
+    font-size:12px;color:var(--muted-dim);
+  }
+
+  /* ---------- Section shared ---------- */
+  section{padding:100px 0;}
+  .section-head{
+    max-width:640px;
+    margin-bottom:56px;
+  }
+  .section-head h2{
+    font-size:clamp(34px,4.5vw,50px);
+    margin-top:14px;
+  }
+  .section-head p{color:var(--muted);font-size:16px;margin-top:14px;}
+
+  /* ---------- Services ---------- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+  }
+  .service-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:34px 28px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .service-card::before{
+    content:"";
+    position:absolute;inset:0;
+    background:linear-gradient(160deg, var(--blue-soft), transparent 55%);
+    opacity:0;
+    transition:opacity .3s ease;
+  }
+  .service-card:hover{
+    transform:translateY(-6px);
+    border-color:var(--blue);
+    box-shadow:0 20px 40px -18px rgba(0,136,255,0.35);
+  }
+  .service-card:hover::before{opacity:1;}
+  .service-card .tc{
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    color:var(--orange);
+    letter-spacing:1.5px;
+    display:block;
+    margin-bottom:18px;
+  }
+  .service-icon{
+    width:52px;height:52px;
+    border-radius:11px;
+    display:flex;align-items:center;justify-content:center;
+    background:var(--blue-soft);
+    border:1px solid rgba(0,136,255,0.3);
+    margin-bottom:22px;
+    position:relative;z-index:1;
+  }
+  .service-card h3{
+    font-size:26px;
+    margin-bottom:12px;
+    position:relative;z-index:1;
+  }
+  .service-card p{color:var(--muted);font-size:14.5px;margin-bottom:18px;position:relative;z-index:1;}
+  .service-card ul{position:relative;z-index:1;}
+  .service-card ul li{
+    font-size:13.5px;color:var(--muted);
+    display:flex;align-items:center;gap:9px;
+    padding:5px 0;
+  }
+  .service-card ul li::before{
+    content:"";
+    width:5px;height:5px;background:var(--orange);border-radius:50%;flex-shrink:0;
+  }
+
+  /* ---------- Packages ---------- */
+  .pricing-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:26px;
+    align-items:stretch;
+  }
+  .price-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:36px 30px;
+    display:flex;flex-direction:column;
+    transition:transform .3s ease, box-shadow .3s ease;
+    position:relative;
+  }
+  .price-card:hover{transform:translateY(-5px);}
+  .price-card.featured{
+    border:1px solid var(--orange);
+    background:linear-gradient(180deg, rgba(255,153,0,0.07), var(--bg-card) 35%);
+    box-shadow:0 25px 55px -22px rgba(255,153,0,0.4);
+  }
+  .badge{
+    position:absolute;top:-14px;left:30px;
+    background:linear-gradient(100deg,var(--orange),#e08600);
+    color:#181008;
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;font-weight:700;letter-spacing:1.2px;
+    padding:6px 14px;border-radius:20px;
+  }
+  .price-tier{font-family:'Space Mono',monospace;font-size:12.5px;color:var(--muted-dim);letter-spacing:1.5px;margin-bottom:10px;}
+  .price-card h3{font-size:28px;margin-bottom:8px;}
+  .price-card .price{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:42px;
+    color:var(--blue);
+    margin:14px 0 4px;
+  }
+  .price-card.featured .price{color:var(--orange);}
+  .price-note{font-size:12.5px;color:var(--muted-dim);margin-bottom:24px;}
+  .price-card ul{margin-bottom:30px;flex-grow:1;}
+  .price-card ul li{
+    font-size:14.5px;color:var(--muted);
+    padding:9px 0;
+    border-bottom:1px dashed var(--line);
+    display:flex;gap:10px;align-items:flex-start;
+  }
+  .price-card ul li:last-child{border-bottom:none;}
+  .check{color:var(--blue);flex-shrink:0;margin-top:2px;}
+  .featured .check{color:var(--orange);}
+
+  /* ---------- Why choose us ---------- */
+  .why-wrap{
+    display:grid;
+    grid-template-columns:0.9fr 1.1fr;
+    gap:60px;
+    align-items:center;
+  }
+  .compare{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .compare-row{
+    display:grid;
+    grid-template-columns:1.4fr 0.8fr 0.8fr;
+    align-items:center;
+    padding:16px 22px;
+    border-bottom:1px solid var(--line);
+    font-size:14px;
+  }
+  .compare-row:last-child{border-bottom:none;}
+  .compare-row.head{
+    background:var(--bg-elevated);
+    font-family:'Space Mono',monospace;
+    font-size:11.5px;letter-spacing:1.2px;color:var(--muted-dim);
+    text-transform:uppercase;
+  }
+  .compare-row .label{color:var(--white);}
+  .compare-row .cell{text-align:center;}
+  .cell.no{color:var(--muted-dim);}
+  .cell.yes{color:var(--blue);font-weight:700;}
+  .compare-row.head .cell.yes-h{color:var(--orange);}
+
+  .why-list{display:flex;flex-direction:column;gap:26px;}
+  .why-item{display:flex;gap:18px;}
+  .why-num{
+    font-family:'Space Mono',monospace;
+    font-size:13px;color:var(--orange);
+    border:1px solid var(--line);
+    border-radius:8px;
+    width:38px;height:38px;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .why-item h4{font-size:18px;margin-bottom:6px;font-family:'Inter',sans-serif;font-weight:700;}
+  .why-item p{font-size:14.5px;color:var(--muted);}
+
+  /* ---------- Drive portfolio embed ---------- */
+  .drive-panel{
+    margin-top:26px;
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .drive-panel-bar{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    flex-wrap:wrap;
+    padding:16px 22px;
+    border-bottom:1px solid var(--line);
+    background:var(--bg-elevated);
+  }
+  .drive-panel-title{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    font-family:'Space Mono',monospace;
+    font-size:13px;
+    letter-spacing:0.5px;
+    color:var(--muted);
+  }
+  .drive-frame{
+    width:100%;
+    height:480px;
+    border:none;
+    display:block;
+    background:#fff;
+  }
+  @media (max-width:600px){
+    .drive-frame{height:360px;}
+  }
+
+  /* ---------- Contact ---------- */
+  .contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:50px;
+  }
+  .form-card{
+    background:var(--bg-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:36px;
+  }
+  .field{margin-bottom:20px;}
+  .field label{
+    display:block;font-size:12.5px;letter-spacing:1px;text-transform:uppercase;
+    color:var(--muted-dim);margin-bottom:8px;font-family:'Space Mono',monospace;
+  }
+  .field input, .field select, .field textarea{
+    width:100%;
+    background:var(--bg-elevated);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:13px 14px;
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    font-size:14.5px;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus{
+    outline:none;border-color:var(--blue);box-shadow:0 0 0 3px var(--blue-soft);
+  }
+  .field textarea{resize:vertical;min-height:100px;}
+  .form-note{font-size:12px;color:var(--muted-dim);margin-top:10px;}
+
+  .contact-side{display:flex;flex-direction:column;justify-content:space-between;}
+  .contact-block h3{font-size:32px;margin-bottom:16px;}
+  .contact-block p{color:var(--muted);margin-bottom:26px;max-width:440px;}
+  .contact-info{display:flex;flex-direction:column;gap:16px;margin-bottom:30px;}
+  .contact-info-row{display:flex;gap:14px;align-items:center;font-size:14.5px;color:var(--muted);}
+  .icon-chip{
+    width:38px;height:38px;border-radius:9px;
+    background:var(--blue-soft);border:1px solid rgba(0,136,255,0.3);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+
+  /* ---------- Footer ---------- */
+  footer{padding:60px 0 30px;}
+  .footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1fr;
+    gap:40px;
+    padding-bottom:40px;
+  }
+  .footer-brand p{color:var(--muted);font-size:14px;margin-top:14px;max-width:280px;}
+  .footer-col h5{
+    font-family:'Space Mono',monospace;
+    font-size:12px;letter-spacing:1.5px;text-transform:uppercase;
+    color:var(--muted-dim);margin-bottom:16px;
+  }
+  .footer-col ul{display:flex;flex-direction:column;gap:11px;}
+  .footer-col a{color:var(--muted);font-size:14.5px;transition:color .2s;}
+  .footer-col a:hover{color:var(--orange);}
+  .socials{display:flex;gap:12px;margin-top:16px;}
+  .social-chip{
+    width:38px;height:38px;border-radius:50%;
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    transition:border-color .2s, background .2s, transform .2s;
+  }
+  .social-chip:hover{border-color:var(--orange);background:var(--orange-soft);transform:translateY(-3px);}
+  .footer-bottom{
+    border-top:1px solid var(--line);
+    padding-top:24px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:14px;
+    font-size:13px;color:var(--muted-dim);
+  }
+  .footer-bottom a{color:var(--muted-dim);}
+  .footer-bottom a:hover{color:var(--white);}
+
+  /* ---------- reveal on scroll ---------- */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:980px){
+    .hero-grid{grid-template-columns:1fr;}
+    .services-grid,.pricing-grid{grid-template-columns:1fr;}
+    .why-wrap{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:760px){
+    .nav-links{display:none;}
+    .burger{display:flex;}
+    .nav-right .btn-primary{display:none;}
+    .mobile-menu{display:flex;}
+    .hero{padding-top:130px;}
+    section{padding:70px 0;}
+    .compare-row{grid-template-columns:1.6fr 0.7fr 0.7fr;font-size:12.5px;padding:13px 14px;}
+    .footer-grid{grid-template-columns:1fr;gap:30px;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:0.001ms !important;transition-duration:0.001ms !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ================= HEADER ================= -->
+<header id="siteHeader">
+  <div class="wrap nav-row">
+    <a href="#top" class="logo">Cine<span class="spark">Spark</span><span class="dot"></span></a>
+    <nav class="nav-links">
+      <a href="#services">Services</a>
+      <a href="#packages">Packages</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-right">
+      <a href="#contact" class="btn btn-primary">Book a Call</a>
+      <button class="burger" id="burgerBtn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="scrim" id="scrim"></div>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-close" id="mobileClose" aria-label="Close menu">&times;</button>
+  <a href="#services">Services</a>
+  <a href="#packages">Packages</a>
+  <a href="#portfolio">Portfolio</a>
+  <a href="#contact">Contact</a>
+  <a href="#contact" class="btn btn-primary" style="justify-content:center;margin-top:10px;">Book a Call</a>
+</div>
+
+<!-- ================= HERO ================= -->
+<div id="top"></div>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Visual Productions & Media Agency</span>
+      <h1>Turn every <span class="grad-text">frame</span> into more admissions and more customers.</h1>
+      <p class="sub">CineSpark builds cinematic video and social media systems for schools, colleges and growing businesses — designed to raise enrollments, build brand authority, and get you noticed before anyone clicks "inquire."</p>
+      <div class="hero-ctas">
+        <a href="#packages" class="btn btn-orange">View Our Packages</a>
+        <a href="#portfolio" class="btn btn-ghost">See Our Work</a>
+      </div>
+      <div class="hero-stats">
+        <div><div class="num">120+</div><div class="lbl">Campuses & Brands Shot</div></div>
+        <div><div class="num">4.8M</div><div class="lbl">Reel Views Delivered</div></div>
+        <div><div class="num">92%</div><div class="lbl">Client Retention Rate</div></div>
+      </div>
+    </div>
+
+    <div class="reel-frame reveal">
+      <div class="reel-inner">
+        <div class="letterbox-bar top"></div>
+        <div class="rec-tag"><span class="rec-dot"></span> REC</div>
+        <div class="play-btn" aria-label="Play showreel">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="#12181f"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <div class="timecode">00:00:14:22</div>
+        <div class="letterbox-bar bottom"></div>
+        <div class="scanline"></div>
+      </div>
+      <div class="reel-caption">
+        <span>CINESPARK_SHOWREEL_2026.mp4</span>
+        <span>4K · 24fps</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="filmstrip"></div>
+
+<!-- ================= SERVICES ================= -->
+<section id="services">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">What We Shoot & Run</span>
+      <h2>One crew. Three deliverables. Zero handoff chaos.</h2>
+      <p>From campus gate to Instagram grid — CineSpark covers the full production pipeline so you're not stitching together three different vendors.</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card reveal">
+        <span class="tc">00:01 — SHOOT</span>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0088FF" stroke-width="1.8"><path d="M2 7h13v10H2z"/><path d="M15 10l6-3v10l-6-3z"/></svg>
+        </div>
+        <h3>Cinematic Shooting</h3>
+        <p>Campus tours, event coverage and brand films shot on high-end cinema equipment — built to make a great first impression.</p>
+        <ul>
+          <li>Full campus & facility tours</li>
+          <li>Convocations & event coverage</li>
+          <li>Drone & gimbal cinematography</li>
+        </ul>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="tc">00:02 — EDIT</span>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0088FF" stroke-width="1.8"><path d="M4 5h16v14H4z"/><path d="M4 9h16M9 5v4"/></svg>
+        </div>
+        <h3>High-Retention Editing</h3>
+        <p>Reels and shorts cut for watch-time, with color grading and sound design that keep viewers from scrolling past.</p>
+        <ul>
+          <li>Reels, Shorts & long-form cuts</li>
+          <li>Cinema-grade color grading</li>
+          <li>Sound design & motion captions</li>
+        </ul>
+      </div>
+
+      <div class="service-card reveal">
+        <span class="tc">00:03 — GROW</span>
+        <div class="service-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0088FF" stroke-width="1.8"><path d="M4 20V10M12 20V4M20 20v-7"/></svg>
+        </div>
+        <h3>Social Media Management</h3>
+        <p>Full page handling with a real content calendar, on-brand caption writing, and growth tracked in numbers you understand.</p>
+        <ul>
+          <li>Content calendar & scheduling</li>
+          <li>Caption writing & community replies</li>
+          <li>Monthly growth & reach reporting</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="filmstrip"></div>
+
+<!-- ================= PACKAGES ================= -->
+<section id="packages">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Packages & Pricing</span>
+      <h2>Built for admissions season, not just one shoot.</h2>
+      <p>Pick a one-time production, a growth retainer, or the full media department replacement — every tier scales with your calendar.</p>
+    </div>
+
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-tier">TIER 01</div>
+        <h3>Mini Starter</h3>
+        <div class="price">Event Shoot</div>
+        <div class="price-note">One-time · single-day coverage</div>
+        <ul>
+          <li><span class="check">✓</span> Half-day cinematic shoot</li>
+          <li><span class="check">✓</span> 1 highlight reel (60–90 sec)</li>
+          <li><span class="check">✓</span> 3 short-form cutdowns</li>
+          <li><span class="check">✓</span> Basic color correction</li>
+          <li><span class="check">✓</span> 5-day delivery turnaround</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="justify-content:center;">Start With This</a>
+      </div>
+
+      <div class="price-card featured reveal">
+        <span class="badge">MOST BOOKED</span>
+        <div class="price-tier">TIER 02</div>
+        <h3>Admission & Growth</h3>
+        <div class="price">Monthly Retainer</div>
+        <div class="price-note">Best for active admission cycles</div>
+        <ul>
+          <li><span class="check">✓</span> 2 shoot days per month</li>
+          <li><span class="check">✓</span> 8 high-retention reels/shorts</li>
+          <li><span class="check">✓</span> Full color grade & sound design</li>
+          <li><span class="check">✓</span> Social page management (1 platform)</li>
+          <li><span class="check">✓</span> Monthly performance report</li>
+        </ul>
+        <a href="#contact" class="btn btn-orange" style="justify-content:center;">Book This Package</a>
+      </div>
+
+      <div class="price-card reveal">
+        <div class="price-tier">TIER 03</div>
+        <h3>Complete Digital & Media</h3>
+        <div class="price">Full Retainer</div>
+        <div class="price-note">Runs your media presence end-to-end</div>
+        <ul>
+          <li><span class="check">✓</span> Weekly shoot days</li>
+          <li><span class="check">✓</span> Unlimited reels/shorts editing</li>
+          <li><span class="check">✓</span> Full-page social management (all platforms)</li>
+          <li><span class="check">✓</span> Content calendar & caption writing</li>
+          <li><span class="check">✓</span> Priority turnaround & strategy calls</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost" style="justify-content:center;">Talk To Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="filmstrip"></div>
+
+<!-- ================= WHY CHOOSE US ================= -->
+<section id="why">
+  <div class="wrap why-wrap">
+    <div class="reveal">
+      <span class="eyebrow">Why CineSpark</span>
+      <h2 style="font-size:clamp(30px,4vw,44px);margin:14px 0 24px;">Cheaper than an in-house crew. Faster than a freelancer.</h2>
+      <div class="why-list">
+        <div class="why-item">
+          <div class="why-num">$</div>
+          <div>
+            <h4>No salaries, no equipment budget</h4>
+            <p>One retainer replaces a videographer, editor and social manager — without payroll, gear purchases, or software licenses.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">⛓</div>
+          <div>
+            <h4>One pipeline, start to finish</h4>
+            <p>Shoot, edit, caption and post are handled by the same team, so nothing gets lost translating between vendors.</p>
+          </div>
+        </div>
+        <div class="why-item">
+          <div class="why-num">🎯</div>
+          <div>
+            <h4>Built around enrollment ROI</h4>
+            <p>Every reel and report ties back to one number that matters to you: inquiries, applications, and admissions — not just "likes."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="compare reveal">
+      <div class="compare-row head">
+        <div>What you get</div>
+        <div class="cell">In-House</div>
+        <div class="cell yes-h">CineSpark</div>
+      </div>
+      <div class="compare-row"><div class="label">Full production crew</div><div class="cell no">Hire 3+</div><div class="cell yes">Included</div></div>
+      <div class="compare-row"><div class="label">Cinema-grade equipment</div><div class="cell no">Buy & maintain</div><div class="cell yes">We bring it</div></div>
+      <div class="compare-row"><div class="label">Content calendar</div><div class="cell no">DIY</div><div class="cell yes">Managed</div></div>
+      <div class="compare-row"><div class="label">Editing turnaround</div><div class="cell no">Varies</div><div class="cell yes">5 days avg</div></div>
+      <div class="compare-row"><div class="label">Monthly cost</div><div class="cell no">3 salaries</div><div class="cell yes">1 retainer</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PORTFOLIO ANCHOR ================= -->
+<section id="portfolio" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Recent Work</span>
+      <h2>A few frames from the field.</h2>
+      <p>Every thumbnail below opens our live editing show reel — the full cut library lives in one growing folder, updated as new work ships.</p>
+    </div>
+    <div class="services-grid">
+      <a class="service-card reveal" style="padding:0;overflow:hidden;" href="https://drive.google.com/drive/folders/1dMqHbdefmfWN0fNen22rhDnMlhOI0Xfx" target="_blank" rel="noopener">
+        <div class="reel-inner" style="aspect-ratio:4/3;border-radius:0;">
+          <div class="rec-tag"><span class="rec-dot"></span> REC</div>
+          <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="#12181f"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="timecode">CAMPUS TOUR</div>
+        </div>
+      </a>
+      <a class="service-card reveal" style="padding:0;overflow:hidden;" href="https://drive.google.com/drive/folders/1dMqHbdefmfWN0fNen22rhDnMlhOI0Xfx" target="_blank" rel="noopener">
+        <div class="reel-inner" style="aspect-ratio:4/3;border-radius:0;">
+          <div class="rec-tag"><span class="rec-dot"></span> REC</div>
+          <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="#12181f"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="timecode">ADMISSION REEL</div>
+        </div>
+      </a>
+      <a class="service-card reveal" style="padding:0;overflow:hidden;" href="https://drive.google.com/drive/folders/1dMqHbdefmfWN0fNen22rhDnMlhOI0Xfx" target="_blank" rel="noopener">
+        <div class="reel-inner" style="aspect-ratio:4/3;border-radius:0;">
+          <div class="rec-tag"><span class="rec-dot"></span> REC</div>
+          <div class="play-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="#12181f"><path d="M8 5v14l11-7z"/></svg></div>
+          <div class="timecode">BRAND SHORT</div>
+        </div>
+      </a>
+    </div>
+
+    <div class="drive-panel reveal">
+      <div class="drive-panel-bar">
+        <div class="drive-panel-title">
+          <span class="rec-tag" style="position:static;"><span class="rec-dot"></span> LIVE</span>
+          <span>Editing Show Reel — Full Portfolio</span>
+        </div>
+        <a href="https://drive.google.com/drive/folders/1dMqHbdefmfWN0fNen22rhDnMlhOI0Xfx" target="_blank" rel="noopener" class="btn btn-ghost btn-sm">Open in Google Drive ↗</a>
+      </div>
+      <iframe
+        class="drive-frame"
+        src="https://drive.google.com/embeddedfolderview?id=1dMqHbdefmfWN0fNen22rhDnMlhOI0Xfx#grid"
+        loading="lazy"
+        title="CineSpark editing show reel portfolio — Google Drive folder">
+      </iframe>
+      <p class="form-note" style="padding:14px 22px 20px;">Browsing shows Drive's own file grid — click any thumbnail to open and play that cut. If the folder appears empty here, its Drive sharing needs to be set to "Anyone with the link."</p>
+    </div>
+  </div>
+</section>
+
+<div class="filmstrip"></div>
+
+<!-- ================= CONTACT ================= -->
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div class="contact-side reveal">
+      <div class="contact-block">
+        <span class="eyebrow">Let's Talk</span>
+        <h3 style="margin-top:14px;">Tell us what you're trying to grow.</h3>
+        <p>Whether it's this admission cycle or your next product launch, send us the brief and we'll come back with a plan and a quote within 24 hours.</p>
+        <div class="contact-info">
+          <div class="contact-info-row">
+            <span class="icon-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0088FF" stroke-width="2"><path d="M22 6l-10 7L2 6"/><rect x="2" y="4" width="20" height="16" rx="2"/></svg></span>
+            hello@cinespark.studio
+          </div>
+          <div class="contact-info-row">
+            <span class="icon-chip"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0088FF" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.12.9.35 1.78.68 2.6a2 2 0 01-.45 2.11L8.09 9.68a16 16 0 006.23 6.23l1.25-1.25a2 2 0 012.11-.45c.82.33 1.7.56 2.6.68A2 2 0 0122 16.92z"/></svg></span>
+            +91 98765 43210
+          </div>
+        </div>
+      </div>
+      <a href="#contact" class="btn btn-orange" style="align-self:flex-start;">Book a Direct Call</a>
+    </div>
+
+    <form class="form-card reveal" id="leadForm">
+      <!-- Honeypot — hidden from real users, catches basic bots -->
+      <input type="text" name="website" autocomplete="off" tabindex="-1" style="position:absolute;left:-9999px;opacity:0;height:0;" aria-hidden="true">
+      <div class="field">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="name" placeholder="Your name" required>
+      </div>
+      <div class="field">
+        <label for="org">Organization Name</label>
+        <input type="text" id="org" name="org" placeholder="School, college, or business name" required>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@organization.com" required>
+      </div>
+      <div class="field">
+        <label for="service">Service Needed</label>
+        <select id="service" name="service" required>
+          <option value="" disabled selected>Select a service</option>
+          <option>Cinematic Shooting</option>
+          <option>Video Editing</option>
+          <option>Social Media Management</option>
+          <option>Full Retainer / Not Sure Yet</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Tell us about your goals, timeline, or event date"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;">Send & Book a Call</button>
+      <p class="form-note">We reply within 24 hours with a plan and quote.</p>
+      <p class="form-note" id="formStatus" role="status" aria-live="polite" style="min-height:16px;"></p>
+    </form>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="filmstrip" style="margin-bottom:50px;"></div>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="#top" class="logo">Cine<span class="spark">Spark</span><span class="dot"></span></a>
+        <p>Visual productions and media management for schools, colleges and growing businesses.</p>
+        <div class="socials">
+          <a href="#" class="social-chip" aria-label="Instagram"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5f7fa" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+          <a href="#" class="social-chip" aria-label="YouTube"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5f7fa" stroke-width="1.8"><rect x="2" y="5" width="20" height="14" rx="4"/><path d="M10 9l5 3-5 3z" fill="#f5f7fa" stroke="none"/></svg></a>
+          <a href="#" class="social-chip" aria-label="LinkedIn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5f7fa" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="3"/><path d="M7 10v7M7 7v.01M12 17v-4a2 2 0 014 0v4M12 13v4"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h5>Navigate</h5>
+        <ul>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#packages">Packages</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Services</h5>
+        <ul>
+          <li><a href="#services">Cinematic Shooting</a></li>
+          <li><a href="#services">Video Editing</a></li>
+          <li><a href="#services">Social Media</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <ul>
+          <li><a href="#why">Why CineSpark</a></li>
+          <li><a href="#contact">Book a Call</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 CineSpark Media. All rights reserved.</span>
+      <span>Shot, cut & posted by CineSpark.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header scroll state
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Mobile menu
+  const burger = document.getElementById('burgerBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileClose = document.getElementById('mobileClose');
+  const scrim = document.getElementById('scrim');
+  function openMenu(){ mobileMenu.classList.add('open'); scrim.classList.add('open'); }
+  function closeMenu(){ mobileMenu.classList.remove('open'); scrim.classList.remove('open'); }
+  burger.addEventListener('click', openMenu);
+  mobileClose.addEventListener('click', closeMenu);
+  scrim.addEventListener('click', closeMenu);
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  revealEls.forEach(el => io.observe(el));
+
+  // Lead form — submits to the CineSpark backend API
+  // Change this to your deployed backend URL when you go live.
+  const API_BASE = "http://localhost:4000";
+
+  const form = document.getElementById('leadForm');
+  const statusEl = document.getElementById('formStatus');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = form.querySelector('button[type="submit"]');
+    const original = btn.textContent;
+
+    // Honeypot: if this hidden field got filled in, silently pretend success.
+    if (form.website.value) {
+      form.reset();
+      return;
+    }
+
+    const payload = {
+      name: form.name.value,
+      organization: form.org.value,
+      email: form.email.value,
+      service: form.service.value,
+      message: form.message.value,
+    };
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    statusEl.textContent = '';
+    statusEl.className = 'form-note';
+
+    try {
+      const res = await fetch(`${API_BASE}/api/leads`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json().catch(() => ({}));
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+
+      btn.textContent = 'Sent — We\'ll be in touch ✓';
+      statusEl.textContent = 'Thanks — your message is in. We reply within 24 hours.';
+      statusEl.style.color = '#0088FF';
+      form.reset();
+    } catch (err) {
+      btn.textContent = original;
+      statusEl.textContent = err.message.includes('fetch')
+        ? 'Could not reach the server. Please check your connection and try again.'
+        : err.message;
+      statusEl.style.color = '#FF9900';
+    } finally {
+      btn.disabled = false;
+      setTimeout(() => {
+        if (btn.textContent !== original) btn.textContent = original;
+      }, 3200);
+    }
+  });
+</script>
+
+</body>
+</html>
